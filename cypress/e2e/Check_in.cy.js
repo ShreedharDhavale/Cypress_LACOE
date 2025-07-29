@@ -8,7 +8,7 @@ Cypress.on('window:before:load', (win) => {
 });
 
 it('check_in', () => {
-
+   cy.viewport(1920, 1080);
    cy.visit('https://uat-assetfusion360-lacoe.hexalytics.ai/');
    cy.get("#username").type("admin@gmail.com")// add Username
    cy.get("[placeholder='Password']").type("123456")// add Password

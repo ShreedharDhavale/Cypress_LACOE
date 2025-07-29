@@ -1,5 +1,5 @@
 describe('template spec', () => {
-it('Transfer', () => {
+it('Transfer_To_Location', () => {
 
 })    
 // Prevent Cypress from navigating away
@@ -7,8 +7,8 @@ Cypress.on('window:before:load', (win) => {
   win.onbeforeunload = null;
 });
 
-it('Transfer', () => {
-
+it('Transfer_To_Location', () => {
+   cy.viewport(1920, 1080);
    cy.visit('https://uat-assetfusion360-lacoe.hexalytics.ai/');
    cy.get("#username").type("admin@gmail.com")// add Username
    cy.get("[placeholder='Password']").type("123456")// add Password
