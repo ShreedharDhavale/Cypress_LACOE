@@ -9,10 +9,14 @@ Cypress.on('window:before:load', (win) => {
  
  
   it('Checkoutset add', () => {
- 
+    cy.viewport(1920, 1080);
+    cy.fixture('LACOE_Test_Data').then( (data) =>{
+    data.forEach((userdata) => {
     cy.visit('https://uat-assetfusion360-lacoe.hexalytics.ai/'); // This will npx
-    cy.get("#username").type("admin@gmail.com")// add Username
-    cy.get("[placeholder='Password']").type("123456")// add Password
+
+    
+    cy.get("#username").type(userdata.Username)// add Username
+    cy.get("[placeholder='Password']").type(userdata.Password)// add Password
     
     cy.wait(5000)
     cy.viewport(1920, 1080);
@@ -41,5 +45,10 @@ Cypress.on('window:before:load', (win) => {
     cy.get("[class='border   rounded-lg px-[16px] xl:px-[12px] 3xl:px-[0.833vw] py-[10px] xl:py-[6px] 3xl:py-[0.521vw] text-[#fff]  text-[16px] xl:text-[13px] 3xl:text-[0.833vw] font-normal cursor-pointer bg-[#3D65C9]']").eq(0).click()// Click on "Add to list" button
     cy.get("[class='border   rounded-lg px-[16px] xl:px-[12px] 3xl:px-[0.833vw] py-[10px] xl:py-[6px] 3xl:py-[0.521vw] text-[#fff]  text-[16px] xl:text-[13px] 3xl:text-[0.833vw] font-normal cursor-pointer bg-[#3D65C9]']").eq(1).click()// Click on "Submit" button
     cy.get("[class='bg-[#3D65C9] justify-center rounded-md py-2.5 px-4 text-white text-sm font-normal flex items-center gap-1.5']").click()// Click on "Yes" on pop up
+    cy.get('div.dropdown-menu').invoke('show'); // Force show hidden menu
+
+    cy.contains('span', 'Logout').click();
+      })
+    })
   })
 })

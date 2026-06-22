@@ -10,10 +10,12 @@ win.onbeforeload = null;
 
  it('Manage groups', () => {
 cy.viewport(1920, 1080);
+cy.fixture('LACOE_Test_Data').then( (data) =>{
+data.forEach((userdata) => {
 cy.visit('https://uat-assetfusion360-lacoe.hexalytics.ai/');
 
-cy.get("#username").type("admin@gmail.com")// add Username
-cy.get("[placeholder='Password']").type("123456")// add Password
+cy.get("#username").type(userdata.Username)// add Username
+cy.get("[placeholder='Password']").type(userdata.Password)// add Password
     
 cy.wait(5000)
 
@@ -22,8 +24,8 @@ cy.wait(5000)
 cy.visit('https://uat-assetfusion360-lacoe.hexalytics.ai/admin/settings/groups')// Navigate to manage group page
 cy.wait(2000)   
 cy.get("[class='bg-[#3B59BA] rounded-md py-2.5 px-4 3xl:py-[0.521vw] 3xl:px-[0.833vw] border border-[#3B59BA] text-white text-sm font-normal leading-4 3xl:text-[0.833vw] 3xl:leading-[0.833vw] flex items-center gap-1.5 3xl:gap-[0.417vw]']").click()// Click on "Add New" button
-cy.get("[class='placeholder:text-[#041c4f] text-[#000] placeholder:text-[13px] w-full h-10 p-inputtext p-component']").type("Test group")// Add group name
-cy.get("[class='p-inputtextarea p-inputtext p-component']").type("Test new group")// Add description
+cy.get("[class='placeholder:text-[#041c4f] text-[#000] placeholder:text-[13px] w-full h-10 p-inputtext p-component']").type(userdata.Manage_group_name)// Add group name
+cy.get("[class='p-inputtextarea p-inputtext p-component']").type(userdata.Manage_group_description)// Add description
 cy.wait(2000)
 cy.get("[class='px-[16px] xl:px-[16px] 3xl:px-[0.833vw] py-[8px] xl:py-[8px] 3xl:py-[0.417vw] border-transparent bg-[#3B59BA] rounded-[7px] text-[#fff] cursor-pointer p-button p-component']").click()// Click on "Add" button
 //cy.get("[class='p-inputtextarea p-inputtext p-component']").eq(1).click()// Select all site access
@@ -34,6 +36,10 @@ cy.get("[class='disable_tabs_bottomline px-[16px] xl:px-[10px] 3xl:px-[0.833vw] 
 cy.wait(5000)
 cy.get("[class='p-checkbox-input']").eq(0).click()// Click on select all permission
 cy.get("[class='text-[#27313B] text-[14px] xl:text-[14px] 3xl:text-[0.833vw] font-normal px-[14px] xl:px-[16px] 3xl:px-[0.833vw] py-[8px] xl:py-[10px]  3xl:py-[0.421vw]  border border-[#BECDE3] rounded-[6px] 3xl:rounded-[0.313vw] 3xl:gap-[0.521vw]']").click()
+cy.get('div.dropdown-menu').invoke('show'); // Force show hidden menu
 
+cy.contains('span', 'Logout').click();
+         })
+      })
    })
 })

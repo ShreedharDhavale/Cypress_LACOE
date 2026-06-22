@@ -9,9 +9,13 @@ Cypress.on('window:before:load', (win) => {
 
 it('Reservation_User', () => {
    cy.viewport(1920, 1080);
+   cy.fixture('LACOE_Test_Data').then( (data) =>{
+   data.forEach((userdata) => {
+  
    cy.visit('https://uat-assetfusion360-lacoe.hexalytics.ai/');
-   cy.get("#username").type("admin@gmail.com")// add Username
-   cy.get("[placeholder='Password']").type("123456")// add Password
+   
+   cy.get("#username").type(userdata.Username)// add Username
+   cy.get("[placeholder='Password']").type(userdata.Password)// add Password
 
    cy.wait(5000)
  
@@ -33,6 +37,7 @@ it('Reservation_User', () => {
      cy.get("[class='p-dropdown-item-label']").eq(0).click()// Select Asset Group from dropdown
      cy.wait(5000)
      cy.contains('button', 'Apply').click();// Click on "Apply" button
+     cy.wait(5000)
      cy.get("[class='p-checkbox-input']").eq(3).click()// Select select box for Asset reservation 
      cy.get("[class='loco-plus']").eq(1).click()// Click on "Add to list" button
      cy.wait(5000)
@@ -48,6 +53,11 @@ it('Reservation_User', () => {
      cy.get("[data-pc-section='day']").eq(7).click();// Select date for "Reserve Till"
      cy.wait(2000)
      cy.get("[class='text-[#fff] text-[14px] xl:text-[14px] 3xl:text-[0.833vw] font-normal px-[14px] xl:px-[16px] 3xl:px-[0.833vw] py-[6px] xl:py-[8px] 3xl:py-[0.421vw] bg-[#3B59BA] border-[#3B59BA] border rounded-[6px] 3xl:rounded-[0.313vw] flex items-center 3xl:gap-[0.521vw] gap-2 p-button p-component']").click()// Click on "Reserve" button
-     cy.get("[title='Edit']").eq(0).click();// Ckick on edit button
-    })
+     cy.get("[title='Edit']").eq(0).click();// Click on edit button
+     cy.get('div.dropdown-menu').invoke('show'); // Force show hidden menu
+
+     cy.contains('span', 'Logout').click();
+      })
+    })   
+  })
 })
